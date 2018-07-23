@@ -119,6 +119,7 @@ export default class AutoHeightWebView extends PureComponent {
           onLoad={onLoad}
           onLoadStart={onLoadStart}
           onLoadEnd={onLoadEnd}
+          originWhitelist={['*']}
           onShouldStartLoadWithRequest={onShouldStartLoadWithRequest}
           style={styles.webView}
           injectedJavaScript={script + customScript}
