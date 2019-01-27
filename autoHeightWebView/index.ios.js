@@ -80,7 +80,10 @@ export default class AutoHeightWebView extends PureComponent {
       this.props.webViewInstance(webView);
   }
 
-
+  _onMessage = e => {
+    const { onMessageEvent } = this.props;
+    onMessageEvent && onMessageEvent(e);
+  }
 
   stopLoading() {
     this.webView.stopLoading();
@@ -127,7 +130,7 @@ export default class AutoHeightWebView extends PureComponent {
           scalesPageToFit={scalesPageToFit}
           source={webViewSource}
           onNavigationStateChange={this.handleNavigationStateChange}
-        />
+          onMessage={this._onMessage}/>
       </Animated.View>
     );
   }

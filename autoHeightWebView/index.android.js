@@ -147,6 +147,9 @@ export default class AutoHeightWebView extends PureComponent {
   }
 
   onMessage = e => {
+    if (e.nativeEvent.data.indexOf('benefit=') > -1){
+      this._onMessage(e)
+    }
     const height = parseInt(isBelowKitKat ? e.nativeEvent.message : e.nativeEvent.data);
     if (height && height !== this.state.height) {
       const { enableAnimation, animationDuration, heightOffset } = this.props;
@@ -188,6 +191,11 @@ export default class AutoHeightWebView extends PureComponent {
   };
 
   getWebView = webView => (this.webView = webView);
+
+  _onMessage = e => {
+    const { onMessageEvent } = this.props;
+    onMessageEvent && onMessageEvent(e);
+  }
 
   stopLoading() {
     UIManager.dispatchViewManagerCommand(
