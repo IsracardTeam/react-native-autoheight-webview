@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 
-import React, { PureComponent } from 'react';
+import React, { PureComponent } from "react";
 
-import { StyleSheet, Platform, ViewPropTypes } from 'react-native';
+import { StyleSheet, Platform, ViewPropTypes } from "react-native";
 
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-import { WebView } from 'react-native-webview';
+import { WebView } from "react-native-webview";
 
 import {
   isEqual,
@@ -16,9 +16,9 @@ import {
   handleSizeUpdated,
   getStateFromProps,
   getBaseScript
-} from './utils';
+} from "./utils";
 
-import momoize from './momoize';
+import momoize from "./momoize";
 
 export default class AutoHeightWebView extends PureComponent {
   static propTypes = {
@@ -44,7 +44,7 @@ export default class AutoHeightWebView extends PureComponent {
   };
 
   static defaultProps = {
-    baseUrl: Platform.OS === 'ios' ? 'web/' : 'file:///android_asset/web/'
+    baseUrl: Platform.OS === "ios" ? "web/" : "file:///android_asset/web/"
   };
 
   constructor(props) {
@@ -68,6 +68,11 @@ export default class AutoHeightWebView extends PureComponent {
   static getDerivedStateFromProps(props, state) {
     return getStateFromProps(props, state);
   }
+
+  getWebView = webView => {
+    this.webView = webView;
+    this.props.webViewInstance(webView);
+  };
 
   onMessage = event => {
     if (!event.nativeEvent) {
@@ -111,7 +116,7 @@ export default class AutoHeightWebView extends PureComponent {
     return (
       <WebView
         {...this.props}
-        originWhitelist={originWhitelist || ['*']}
+        originWhitelist={originWhitelist || ["*"]}
         ref={this.webView}
         onMessage={this.onMessage}
         style={[
@@ -131,6 +136,6 @@ export default class AutoHeightWebView extends PureComponent {
 
 const styles = StyleSheet.create({
   webView: {
-    backgroundColor: 'transparent'
+    backgroundColor: "transparent"
   }
 });
