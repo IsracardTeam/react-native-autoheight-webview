@@ -177,7 +177,7 @@ export function getBaseScript(style) {
   window.addEventListener('load', updateSize);
   window.addEventListener('resize', updateSize);
   ${domMutationObserveScript}
-  ${Platform.OS === 'ios' ? makeScalePageToFit : ''}
+  ${makeScalePageToFit}
   updateSize();
   `;
 }
