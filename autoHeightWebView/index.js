@@ -70,8 +70,9 @@ export default class AutoHeightWebView extends PureComponent {
   }
 
   getWebView = webView => {
+    const { webViewInstance } = this.props
     this.webView = webView;
-    this.props.webViewInstance(webView);
+    webViewInstance && webViewInstance(webView);
   };
 
   onMessage = event => {
@@ -117,7 +118,7 @@ export default class AutoHeightWebView extends PureComponent {
       <WebView
         {...this.props}
         originWhitelist={originWhitelist || ["*"]}
-        ref={this.webView}
+        ref={this.getWebView}
         onMessage={this.onMessage}
         style={[
           styles.webView,
