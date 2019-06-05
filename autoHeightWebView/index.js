@@ -40,7 +40,9 @@ export default class AutoHeightWebView extends PureComponent {
     customStyle: PropTypes.string,
     // webview props
     originWhitelist: PropTypes.arrayOf(PropTypes.string),
-    onMessage: PropTypes.func
+    onMessage: PropTypes.func,
+    zoomable: PropTypes.bool,
+    webViewInstance: PropTypes.func,
   };
 
   static defaultProps = {
@@ -112,8 +114,8 @@ export default class AutoHeightWebView extends PureComponent {
 
   render() {
     const { height, width } = this.state;
-    const { style, originWhitelist } = this.props;
-    const { source, script } = this.getUpdatedState(this.props, getBaseScript);
+    const { style, originWhitelist, zoomable } = this.props;
+    const { source, script } = this.getUpdatedState(this.props, getBaseScript(zoomable));
     return (
       <WebView
         {...this.props}

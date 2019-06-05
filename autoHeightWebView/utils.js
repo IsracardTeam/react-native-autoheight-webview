@@ -155,29 +155,31 @@ export function getStateFromProps(props, state) {
 }
 
 // add viewport setting to meta for WKWebView
-const makeScalePageToFit = `
+const makeScalePageToFit = (zoomable = true) =>`
 var meta = document.createElement('meta'); 
 meta.setAttribute('name', 'viewport'); 
-meta.setAttribute('content', 'width=device-width'); document.getElementsByTagName('head')[0].appendChild(meta);
+meta.setAttribute('content', 'width=device-width, user-scalable=${zoomable ? 'yes' : 'no'}'); document.getElementsByTagName('head')[0].appendChild(meta);
 `;
 
-export function getBaseScript(style) {
-  return `
-  ;
-  if (!document.getElementById("rnahw-wrapper")) {
-    var wrapper = document.createElement('div');
-    wrapper.id = 'rnahw-wrapper';
-    while (document.body.firstChild instanceof Node) {
-      wrapper.appendChild(document.body.firstChild);
+export function getBaseScript(zoomable) {
+  return function(style) {
+    return `
+    ;
+    if (!document.getElementById("rnahw-wrapper")) {
+      var wrapper = document.createElement('div');
+      wrapper.id = 'rnahw-wrapper';
+      while (document.body.firstChild instanceof Node) {
+        wrapper.appendChild(document.body.firstChild);
+      }
+      document.body.appendChild(wrapper);
     }
-    document.body.appendChild(wrapper);
+    var width = ${getWidth(style)};
+    ${updateSizeWithMessage('wrapper')}
+    window.addEventListener('load', updateSize);
+    window.addEventListener('resize', updateSize);
+    ${domMutationObserveScript}
+    ${makeScalePageToFit(zoomable)}
+    updateSize();
+    `;
   }
-  var width = ${getWidth(style)};
-  ${updateSizeWithMessage('wrapper')}
-  window.addEventListener('load', updateSize);
-  window.addEventListener('resize', updateSize);
-  ${domMutationObserveScript}
-  ${makeScalePageToFit}
-  updateSize();
-  `;
 }
