@@ -29,7 +29,7 @@
   "peerDependencies": {
     "react": "*",
     "react-native": ">= 0.57.0",
-    "react-native-webview": "^5.2.1"
+    "react-native-webview": "^5.12.1"
   },
   "dependencies": {
     "immutable": "^3.8.2",
