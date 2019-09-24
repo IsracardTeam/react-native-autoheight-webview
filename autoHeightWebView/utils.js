@@ -52,7 +52,7 @@ const getBaseScript = ({ style, zoomable }) =>
   window.addEventListener('load', updateSize);
   window.addEventListener('resize', updateSize);
   ${domMutationObserveScript}
-  ${Platform.OS === 'ios' ? makeScalePageToFit(zoomable) : ''}
+  ${makeScalePageToFit(zoomable)}
   updateSize();
   `;
 
