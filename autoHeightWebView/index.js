@@ -18,12 +18,12 @@ const AutoHeightWebView = React.memo(
       return null;
     }
 
-    let webView = useRef();
+    let webView = useRef(null);
 
-    getWebView = webView => {
+    const getWebView = _webView => {
       const { webViewInstance } = props
-      webView.current = webView;
-      webViewInstance && webViewInstance(webView);
+      webView.current = _webView;
+      webViewInstance && webViewInstance(_webView);
     };
 
     useImperativeHandle(ref, () => ({
